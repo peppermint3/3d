@@ -454,8 +454,8 @@ if (uMzI > .002){
   vec3 mzR = vec3(dot(viewMatrix[0].xyz, vFogV), dot(viewMatrix[1].xyz, vFogV), dot(viewMatrix[2].xyz, vFogV));
   vec3 mzV = cameraPosition + mzR - uMzP; float mzL = length(mzV) + .001;
   float mzK = dot(mzV / mzL, uMzD);
-  float mzC = smoothstep(-.3, .3, mzK);   // 총구 앞쪽 반구: 바닥·벽·천장 가리지 않고 앞에 있는 건 다 밝아져요
-  float mzA = min(uMzI * mzC / (1. + mzL * mzL * .06), 1.5) * (1. - smoothstep(3.4, 6., mzL));   // 총구에서 6m 까지만 (가까울수록 세게)   // 총구 바로 앞(약 10m 안)만 밝아지고, 먼 곳은 밝아지지 않아요
+  float mzC = smoothstep(.55, .85, mzK);   // 총구가 향한 방향 앞쪽 부채꼴만 (옆·뒤는 안 밝아져요)
+  float mzA = min(uMzI * mzC / (1. + mzL * mzL * .12), 1.6) * (1. - smoothstep(3., 6., mzL));   // 총구 바로 앞이 가장 세고 6m 에서 사라져요
   reflectedLight.indirectDiffuse += (diffuseColor.rgb * 1.7 + vec3(.03, .018, .008)) * vec3(1., .68, .36) * mzA;
 }
 #endif
